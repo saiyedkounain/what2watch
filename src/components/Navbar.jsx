@@ -3,8 +3,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../assets/myLogo.png'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Watched Movies', href: '#', current: false },
+  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Watched Movies', href: 'watched-movies', current: false },
 ]
 
 function classNames(...classes) {
