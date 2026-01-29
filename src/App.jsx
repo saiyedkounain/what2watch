@@ -11,7 +11,7 @@ const App = () => {
     <SelectionProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Movies />} />
+          <Route path='/' element={<Login />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/login' element={<Login />} />
           <Route path='/result' element={<WatchedMovies />} />
