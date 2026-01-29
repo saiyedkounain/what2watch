@@ -1,12 +1,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from '../assets/myLogo.png'
 
 const navigation = [
-  { name: 'Person 1', href: '/', current: true },
-  { name: 'Person 2', href: '/person2', current: false },
-  { name: 'Result', href: '/result', current: false },
-
+  { name: 'Person 1', href: '/movies' },
+  { name: 'Person 2', href: '/person2' },
+  { name: 'Result', href: '/result' },
 ]
 
 function classNames(...classes) {
@@ -14,6 +14,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const location = useLocation()
   return (
     <Disclosure
       as="nav"
@@ -31,28 +32,34 @@ export default function Navbar() {
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
+            <div className="flex shrink-0 items-center space-x-2">
               <img
-                alt="Your Company"
+                alt="What2Watch"
                 src={Logo}
                 className="h-8 w-auto"
               />
+              <span className="hidden sm:inline-block text-white font-semibold text-lg tracking-tight">
+                What2Watch
+              </span>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
-                    className={classNames(
-                      item.current ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
-                      'rounded-md px-3 py-2 text-sm font-medium',
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {navigation.map((item) => {
+                  const isCurrent = location.pathname === item.href
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      className={classNames(
+                        isCurrent ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium',
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -83,28 +90,26 @@ export default function Navbar() {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                  <span
+                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-default"
                   >
                     Your profile
-                  </a>
+                  </span>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                  <span
+                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden cursor-default"
                   >
                     Settings
-                  </a>
+                  </span>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
+                  <Link
+                    to="/login"
+                    className="block px-4 py-2 text-sm text-red-400 hover:text-red-300 data-focus:bg-white/5 data-focus:outline-hidden"
                   >
-                    Sign out
-                  </a>
+                    Logout
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -114,20 +119,23 @@ export default function Navbar() {
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? 'page' : undefined}
-              className={classNames(
-                item.current ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
+          {navigation.map((item) => {
+            const isCurrent = location.pathname === item.href
+            return (
+              <DisclosureButton
+                key={item.name}
+                as={Link}
+                to={item.href}
+                aria-current={isCurrent ? 'page' : undefined}
+                className={classNames(
+                  isCurrent ? 'bg-gray-950/50 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
+                  'block rounded-md px-3 py-2 text-base font-medium',
+                )}
+              >
+                {item.name}
+              </DisclosureButton>
+            )
+          })}
         </div>
       </DisclosurePanel>
     </Disclosure>
